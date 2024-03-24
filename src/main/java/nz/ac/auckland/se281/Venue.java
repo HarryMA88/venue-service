@@ -22,4 +22,12 @@ public class Venue {
   public String getVenueName() {
     return this.venueName;
   }
+
+  public int getVenueCapacity() {
+    return this.venueCapacity;
+  }
+
+  public int getVenueHireFee() {
+    return this.hireFee;
+  }
 }
