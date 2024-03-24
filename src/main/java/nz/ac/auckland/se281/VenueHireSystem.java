@@ -65,6 +65,11 @@ public class VenueHireSystem {
       }
       return;
     }
+    // prints venues if there are 10 or more venues
+    else {
+      MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(venues.size()), "s");
+      printVenuesHelper();
+    }
   }
 
   public void printVenuesHelper() {
