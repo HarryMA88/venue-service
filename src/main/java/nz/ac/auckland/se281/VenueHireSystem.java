@@ -59,6 +59,7 @@ public class VenueHireSystem {
     }
     
     // creates new venue
+    venueName = venueName.trim();
     Venue newVenue = new Venue(venueName, venueCode, capacity, hireFee);
     venues.add(newVenue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
