@@ -28,16 +28,26 @@ public class VenueHireSystem {
     try {
       Integer.parseInt(capacityInput);
     } catch (Exception e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity","");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
       return;
     }
     int capacity = Integer.parseInt(capacityInput);
     if (capacity <= 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity"," positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
       return;
     }
 
+    try {
+      Integer.parseInt(hireFeeInput);
+    } catch (Exception e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+      return;
+    }
     int hireFee = Integer.parseInt(hireFeeInput);
+    if (hireFee <= 0) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
+      return;
+    }
 
     Venue newVenue = new Venue(venueName, venueCode, capacity, hireFee);
     venues.add(newVenue);
