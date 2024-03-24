@@ -13,6 +13,12 @@ public class VenueHireSystem {
     // checks if there are no existing venues
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
+      return;
+    } else if (venues.size() == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+      Venue venue = venues.get(0);
+      MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), String.valueOf(venue.getVenueCapacity()), String.valueOf(venue.getVenueHireFee()));
+      return;
     }
   }
 
@@ -57,7 +63,7 @@ public class VenueHireSystem {
         return;
       }
     }
-    
+
     // creates new venue
     venueName = venueName.trim();
     Venue newVenue = new Venue(venueName, venueCode, capacity, hireFee);
