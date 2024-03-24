@@ -14,11 +14,68 @@ public class VenueHireSystem {
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
-    } else if (venues.size() == 1) {
+    }
+    // prints venues for if there is one venue
+    else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       Venue venue = venues.get(0);
-      MessageCli.VENUE_ENTRY.printMessage(venue.getVenueName(), venue.getVenueCode(), String.valueOf(venue.getVenueCapacity()), String.valueOf(venue.getVenueHireFee()));
+      // REMEMBER TO ADD ANOTHER INPUT ONCE DOING TASK 2
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.getVenueName(),
+          venue.getVenueCode(),
+          String.valueOf(venue.getVenueCapacity()),
+          String.valueOf(venue.getVenueHireFee()));
       return;
+    }
+    // prints venues for if there is less than 10 venues
+    else if (venues.size() < 10) {
+      switch (venues.size()) {
+        case 2:
+          MessageCli.NUMBER_VENUES.printMessage("are", "two", "s");
+          printVenuesHelper();
+          break;
+        case 3:
+          MessageCli.NUMBER_VENUES.printMessage("are", "three", "s");
+          printVenuesHelper();
+          break;
+        case 4:
+          MessageCli.NUMBER_VENUES.printMessage("are", "four", "s");
+          printVenuesHelper();
+          break;
+        case 5:
+          MessageCli.NUMBER_VENUES.printMessage("are", "five", "s");
+          printVenuesHelper();
+          break;
+        case 6:
+          MessageCli.NUMBER_VENUES.printMessage("are", "six", "s");
+          printVenuesHelper();
+          break;
+        case 7:
+          MessageCli.NUMBER_VENUES.printMessage("are", "seven", "s");
+          printVenuesHelper();
+          break;
+        case 8:
+          MessageCli.NUMBER_VENUES.printMessage("are", "eight", "s");
+          printVenuesHelper();
+          break;
+        case 9:
+          MessageCli.NUMBER_VENUES.printMessage("are", "nine", "s");
+          printVenuesHelper();
+          break;
+      }
+      return;
+    }
+  }
+
+  public void printVenuesHelper() {
+    // prints all the venues in the venues arraylist
+    for (Venue venue : venues) {
+      // REMEMBER TO ADD ANOTHER INPUT ONCE DOING TASK 2
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.getVenueName(),
+          venue.getVenueCode(),
+          String.valueOf(venue.getVenueCapacity()),
+          String.valueOf(venue.getVenueHireFee()));
     }
   }
 
