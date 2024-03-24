@@ -10,7 +10,7 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
-    // TODO implement this method
+    // checks if there are no existing venues
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
     }
@@ -18,13 +18,13 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
-
+    // checks if venue name is valid
     if (venueName.isBlank()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
     }
 
+    // checks if capacity input is valid
     try {
       Integer.parseInt(capacityInput);
     } catch (Exception e) {
@@ -37,6 +37,7 @@ public class VenueHireSystem {
       return;
     }
 
+    // checks if hire fee input is valid
     try {
       Integer.parseInt(hireFeeInput);
     } catch (Exception e) {
@@ -49,6 +50,15 @@ public class VenueHireSystem {
       return;
     }
 
+    // checks if venueCode is valid
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
+        return;
+      }
+    }
+    
+    // creates new venue
     Venue newVenue = new Venue(venueName, venueCode, capacity, hireFee);
     venues.add(newVenue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
