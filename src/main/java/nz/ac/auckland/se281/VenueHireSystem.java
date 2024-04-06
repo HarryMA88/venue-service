@@ -137,6 +137,9 @@ public class VenueHireSystem {
     if (systemDate == null) {
       MessageCli.CURRENT_DATE.printMessage("not set");
     }
+    else {
+      MessageCli.CURRENT_DATE.printMessage(systemDate);
+    }
   }
 
   public void makeBooking(String[] options) {
