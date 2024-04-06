@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
   MainTest.Task1.class,
   MainTest.Task2.class,
   // MainTest.Task3.class,
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+  MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
 
@@ -710,8 +710,26 @@ public class MainTest {
 
     @Test
     public void T4_01_add_your_own_tests_as_needed() throws Exception {
-      runCommands(PRINT_VENUES);
-      assertContains("There are no venues in the system. Please create a venue first.");
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("FAKE", "27/02/2024", "client001@email.com", "230")));
+      assertContains("Booking not made: there is no venue with code 'FAKE'.");
+    }
+
+    @Test
+    public void T4_02_add_your_own_tests_as_needed() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("FAKE", "27/02/2024", "client001@email.com", "230")));
+      assertContains("Booking not made: there is no venue with code 'FAKE'.");
     }
   }
 

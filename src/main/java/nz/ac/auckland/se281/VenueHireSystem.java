@@ -151,6 +151,19 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
+    else {
+      boolean venueFound = false;
+      for (Venue venue : venues) {
+        if (venue.getVenueCode().equals(options[0])) {
+          venueFound = true;
+          break;
+        }
+      }
+      if (!venueFound) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+        return;
+      }
+    }
   }
 
   public void printBookings(String venueCode) {
