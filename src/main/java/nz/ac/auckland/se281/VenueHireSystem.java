@@ -175,6 +175,9 @@ public class VenueHireSystem {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], systemDate);
         return;
       }
+      else if (Integer.parseInt(dateInputParts[i]) > Integer.parseInt(systemDateParts[i])) {
+        break;
+      }
     }
 
   }
