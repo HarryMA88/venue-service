@@ -1,14 +1,16 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class Venue {
 
   private String venueName;
   private String venueCode;
   private int venueCapacity;
   private int hireFee;
-  private String bookingDate;
-  private String customerEmail;
-  private int attendees;
+  private ArrayList<String> bookingDates = new ArrayList<String>();
+  private ArrayList<String> customerEmails = new ArrayList<String>();
+  private ArrayList<Integer> attendees = new ArrayList<Integer>();
 
   // constructor
   public Venue(String venueName, String venueCode, int venueCapacity, int hireFee) {
@@ -34,7 +36,7 @@ public class Venue {
     return this.hireFee;
   }
 
-  public String getBookingDate() {
+  /*public String getBookingDate() {
     return this.bookingDate;
   }
 
@@ -45,16 +47,16 @@ public class Venue {
   public int getAttendees() {
     return this.attendees;
   }
-
+*/
   public void setBookingDate(String bookingDate) {
-    this.bookingDate = bookingDate;
+    this.bookingDates.add(bookingDate);
   }
 
   public void setCustomerEmail(String customerEmail) {
-    this.customerEmail = customerEmail;
+    this.customerEmails.add(customerEmail);
   }
 
   public void setAttendees(int attendees) {
-    this.attendees = attendees;
+    this.attendees.add(attendees);
   }
 }
