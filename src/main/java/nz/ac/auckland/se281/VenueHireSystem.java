@@ -143,14 +143,17 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
+    // reject if date is not set
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
+    // reject if there are no venues
     else if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
+    // reject if venue code does not exist
     else {
       boolean venueFound = false;
       for (Venue venue : venues) {
@@ -164,6 +167,16 @@ public class VenueHireSystem {
         return;
       }
     }
+    // reject if date is in the past
+    String[] dateInputParts = options[1].split("/");
+    String[] systemDateParts = systemDate.split("/");
+    for (int i = 2; i >= 0; i--) {
+      if (Integer.parseInt(dateInputParts[i]) < Integer.parseInt(systemDateParts[i])) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], systemDate);
+        return;
+      }
+    }
+
   }
 
   public void printBookings(String venueCode) {

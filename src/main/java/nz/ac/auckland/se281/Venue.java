@@ -6,6 +6,7 @@ public class Venue {
   private String venueCode;
   private int venueCapacity;
   private int hireFee;
+  private String bookingDate;
 
   // constructor
   public Venue(String venueName, String venueCode, int venueCapacity, int hireFee) {
@@ -29,5 +30,9 @@ public class Venue {
 
   public int getVenueHireFee() {
     return this.hireFee;
+  }
+
+  public String getBookingDate() {
+    return this.bookingDate;
   }
 }
