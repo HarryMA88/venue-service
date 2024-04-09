@@ -136,13 +136,13 @@ public class VenueHireSystem {
   public void printSystemDate() {
     if (systemDate == null) {
       MessageCli.CURRENT_DATE.printMessage("not set");
-    }
-    else {
+    } else {
       MessageCli.CURRENT_DATE.printMessage(systemDate);
     }
   }
 
   public void makeBooking(String[] options) {
+    Venue tempVenue = null;
     // reject if date is not set
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
@@ -159,6 +159,7 @@ public class VenueHireSystem {
       for (Venue venue : venues) {
         if (venue.getVenueCode().equals(options[0])) {
           venueFound = true;
+          tempVenue = venue;
           break;
         }
       }
@@ -174,12 +175,19 @@ public class VenueHireSystem {
       if (Integer.parseInt(dateInputParts[i]) < Integer.parseInt(systemDateParts[i])) {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], systemDate);
         return;
-      }
-      else if (Integer.parseInt(dateInputParts[i]) > Integer.parseInt(systemDateParts[i])) {
+      } else if (Integer.parseInt(dateInputParts[i]) > Integer.parseInt(systemDateParts[i])) {
         break;
       }
     }
-
+    // create booking
+    tempVenue.setBookingDate(options[1]);
+    tempVenue.setCustomerEmail(options[2]);
+    tempVenue.setAttendees(Integer.parseInt(options[3]));
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+        BookingReferenceGenerator.generateBookingReference(),
+        tempVenue.getVenueName(),
+        options[1],
+        options[3]);
   }
 
   public void printBookings(String venueCode) {
