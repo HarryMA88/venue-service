@@ -36,18 +36,18 @@ public class Venue {
     return this.hireFee;
   }
 
-  /*public String getBookingDate() {
-    return this.bookingDate;
+  public ArrayList<String> getBookingDates() {
+    return this.bookingDates;
   }
 
-  public String getCustomerEmail() {
-    return this.customerEmail;
+  public ArrayList<String> getCustomerEmails() {
+    return this.customerEmails;
   }
 
-  public int getAttendees() {
+  public ArrayList<Integer> getAttendees() {
     return this.attendees;
   }
-*/
+
   public void setBookingDate(String bookingDate) {
     this.bookingDates.add(bookingDate);
   }

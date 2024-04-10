@@ -168,8 +168,19 @@ public class VenueHireSystem {
         return;
       }
     }
-    // reject if date is in the past
     String[] dateInputParts = options[1].split("/");
+    // reject if venue is booked on that date
+    for (int i = 0; i < tempVenue.getBookingDates().size(); i++) {
+      String[] bookingDateParts = tempVenue.getBookingDates().get(i).split("/");
+      if (dateInputParts[0].equals(bookingDateParts[0])
+          && dateInputParts[1].equals(bookingDateParts[1])
+          && dateInputParts[2].equals(bookingDateParts[2])) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+            tempVenue.getVenueName(), tempVenue.getBookingDates().get(i));
+        return;
+      }
+    }
+    // reject if date is in the past
     String[] systemDateParts = systemDate.split("/");
     for (int i = 2; i >= 0; i--) {
       if (Integer.parseInt(dateInputParts[i]) < Integer.parseInt(systemDateParts[i])) {
