@@ -17,13 +17,7 @@ public class VenueHireSystem {
       return;
     } else if (venues.size() == 1) { // prints venues for if there is one venue
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      Venue venue = venues.get(0);
-      // REMEMBER TO ADD ANOTHER INPUT ONCE DOING TASK 2
-      MessageCli.VENUE_ENTRY.printMessage(
-          venue.getVenueName(),
-          venue.getVenueCode(),
-          String.valueOf(venue.getVenueCapacity()),
-          String.valueOf(venue.getVenueHireFee()));
+      printVenuesHelper();
       return;
     } else if (venues.size() < 10) { // prints venues for if there is less than 10 venues
       switch (venues.size()) {
@@ -69,13 +63,42 @@ public class VenueHireSystem {
 
   public void printVenuesHelper() {
     // prints all the venues in the venues arraylist
-    for (Venue venue : venues) {
-      // REMEMBER TO ADD ANOTHER INPUT ONCE DOING TASK 2
-      MessageCli.VENUE_ENTRY.printMessage(
-          venue.getVenueName(),
-          venue.getVenueCode(),
-          String.valueOf(venue.getVenueCapacity()),
-          String.valueOf(venue.getVenueHireFee()));
+    if (systemDate == null) {
+      for (Venue venue : venues) {
+        // REMEMBER TO ADD ANOTHER INPUT ONCE DOING TASK 2
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getVenueName(),
+            venue.getVenueCode(),
+            String.valueOf(venue.getVenueCapacity()),
+            String.valueOf(venue.getVenueHireFee()));
+      }
+    }
+    else {
+      ArrayList<String> dates = null;
+      for (Venue venue : venues) {
+        dates = venue.getBookingDates();
+        String available = systemDate;
+        if (!dates.isEmpty()){
+          for (int i = 0; i < dates.size(); i++){
+            if (dates.get(i).equals(available)) {
+              String[] dateParts = dates.get(i).split("/");
+              int day = (Integer.parseInt(dateParts[0]) + 1);
+              if (day < 10) {
+                dateParts[0] = "0" + day;
+              } else {
+                dateParts[0] = String.valueOf(day);
+              }
+              available = dateParts[0] + "/" + dateParts[1] + "/" + dateParts[2];
+              i = -1;
+            }
+          }
+        }
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.getVenueName(),
+            venue.getVenueCode(),
+            String.valueOf(venue.getVenueCapacity()),
+            String.valueOf(venue.getVenueHireFee()),available);
+      }
     }
   }
 
