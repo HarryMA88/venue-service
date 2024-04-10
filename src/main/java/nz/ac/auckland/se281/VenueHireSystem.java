@@ -72,14 +72,13 @@ public class VenueHireSystem {
             String.valueOf(venue.getVenueCapacity()),
             String.valueOf(venue.getVenueHireFee()));
       }
-    }
-    else {
+    } else {
       ArrayList<String> dates = null;
       for (Venue venue : venues) {
         dates = venue.getBookingDates();
         String available = systemDate;
-        if (!dates.isEmpty()){
-          for (int i = 0; i < dates.size(); i++){
+        if (!dates.isEmpty()) {
+          for (int i = 0; i < dates.size(); i++) {
             if (dates.get(i).equals(available)) {
               String[] dateParts = dates.get(i).split("/");
               int day = (Integer.parseInt(dateParts[0]) + 1);
@@ -97,7 +96,8 @@ public class VenueHireSystem {
             venue.getVenueName(),
             venue.getVenueCode(),
             String.valueOf(venue.getVenueCapacity()),
-            String.valueOf(venue.getVenueHireFee()),available);
+            String.valueOf(venue.getVenueHireFee()),
+            available);
       }
     }
   }
@@ -216,13 +216,17 @@ public class VenueHireSystem {
     // adjust attendees if under 25% of venue capacity
     if (Integer.parseInt(options[3]) < tempVenue.getVenueCapacity() * 0.25) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-          options[3], String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25)), String.valueOf(tempVenue.getVenueCapacity()));
+          options[3],
+          String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25)),
+          String.valueOf(tempVenue.getVenueCapacity()));
       options[3] = String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25));
     }
     // adjust attendees if over venue capacity
     else if (Integer.parseInt(options[3]) > tempVenue.getVenueCapacity()) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-          options[3], String.valueOf(tempVenue.getVenueCapacity()), String.valueOf(tempVenue.getVenueCapacity()));
+          options[3],
+          String.valueOf(tempVenue.getVenueCapacity()),
+          String.valueOf(tempVenue.getVenueCapacity()));
       options[3] = String.valueOf(tempVenue.getVenueCapacity());
     }
     // create booking
@@ -232,18 +236,14 @@ public class VenueHireSystem {
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
     tempVenue.setBookingReference(bookingReference);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        bookingReference,
-        tempVenue.getVenueName(),
-        options[1],
-        options[3]);
+        bookingReference, tempVenue.getVenueName(), options[1], options[3]);
   }
 
   public void printBookings(String venueCode) {
     if (venues.isEmpty()) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
-    }
-    else {
+    } else {
       Venue tempVenue = null;
       boolean venueFound = false;
       for (Venue venue : venues) {
@@ -256,15 +256,18 @@ public class VenueHireSystem {
       if (!venueFound) {
         MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
         return;
-      }
-      else {
+      } else {
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(tempVenue.getVenueName());
         if (tempVenue.getBookingReferences().isEmpty()) {
           MessageCli.PRINT_BOOKINGS_NONE.printMessage(tempVenue.getVenueName());
+        } else {
+          for (int i = 0; i < tempVenue.getBookingReferences().size(); i++) {
+            MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
+                tempVenue.getBookingReferences().get(i), tempVenue.getBookingDates().get(i));
+          }
         }
       }
     }
-
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
