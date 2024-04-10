@@ -170,14 +170,10 @@ public class VenueHireSystem {
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
-    }
-    // reject if there are no venues
-    else if (venues.isEmpty()) {
+    } else if (venues.isEmpty()) { // reject if there are no venues
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
-    }
-    // reject if venue code does not exist
-    else {
+    } else { // reject if venue code does not exist
       boolean venueFound = false;
       for (Venue venue : venues) {
         if (venue.getVenueCode().equals(options[0])) {
@@ -213,16 +209,14 @@ public class VenueHireSystem {
         break;
       }
     }
-    // adjust attendees if under 25% of venue capacity
+    // adjust attendees if under 25% of venue capacity or over venue capacity
     if (Integer.parseInt(options[3]) < tempVenue.getVenueCapacity() * 0.25) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
           options[3],
           String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25)),
           String.valueOf(tempVenue.getVenueCapacity()));
       options[3] = String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25));
-    }
-    // adjust attendees if over venue capacity
-    else if (Integer.parseInt(options[3]) > tempVenue.getVenueCapacity()) {
+    } else if (Integer.parseInt(options[3]) > tempVenue.getVenueCapacity()) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
           options[3],
           String.valueOf(tempVenue.getVenueCapacity()),
@@ -240,6 +234,7 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
+    // reject if there are no venues
     if (venues.isEmpty()) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
@@ -253,10 +248,10 @@ public class VenueHireSystem {
           break;
         }
       }
-      if (!venueFound) {
+      if (!venueFound) { // reject if venue code does not exist
         MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
         return;
-      } else {
+      } else { // print bookings
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(tempVenue.getVenueName());
         if (tempVenue.getBookingReferences().isEmpty()) {
           MessageCli.PRINT_BOOKINGS_NONE.printMessage(tempVenue.getVenueName());
