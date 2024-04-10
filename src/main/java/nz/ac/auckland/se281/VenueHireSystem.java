@@ -190,6 +190,18 @@ public class VenueHireSystem {
         break;
       }
     }
+    // adjust attendees if under 25% of venue capacity
+    if (Integer.parseInt(options[3]) < tempVenue.getVenueCapacity() * 0.25) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          options[3], String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25)), String.valueOf(tempVenue.getVenueCapacity()));
+      options[3] = String.valueOf((int) (tempVenue.getVenueCapacity() * 0.25));
+    }
+    // adjust attendees if over venue capacity
+    else if (Integer.parseInt(options[3]) > tempVenue.getVenueCapacity()) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          options[3], String.valueOf(tempVenue.getVenueCapacity()), String.valueOf(tempVenue.getVenueCapacity()));
+      options[3] = String.valueOf(tempVenue.getVenueCapacity());
+    }
     // create booking
     tempVenue.setBookingDate(options[1]);
     tempVenue.setCustomerEmail(options[2]);

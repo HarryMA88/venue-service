@@ -728,8 +728,11 @@ public class MainTest {
               SET_DATE,
               "26/02/2024", //
               MAKE_BOOKING,
-              options("FAKE", "27/02/2024", "client001@email.com", "230")));
-      assertContains("Booking not made: there is no venue with code 'FAKE'.");
+              options("GGG", "28/05/2024", "client999@email.com", "300")));
+
+      assertContains("Number of attendees adjusted from 300 to 260, as the venue capacity is 260.");
+      assertContains("Successfully created booking 'HUD14D8O'");
+      assertDoesNotContain("Booking not made", true);
     }
   }
 
