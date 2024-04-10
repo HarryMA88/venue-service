@@ -229,8 +229,10 @@ public class VenueHireSystem {
     tempVenue.setBookingDate(options[1]);
     tempVenue.setCustomerEmail(options[2]);
     tempVenue.setAttendees(Integer.parseInt(options[3]));
+    String bookingReference = BookingReferenceGenerator.generateBookingReference();
+    tempVenue.setBookingReference(bookingReference);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        BookingReferenceGenerator.generateBookingReference(),
+        bookingReference,
         tempVenue.getVenueName(),
         options[1],
         options[3]);
@@ -254,6 +256,12 @@ public class VenueHireSystem {
       if (!venueFound) {
         MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
         return;
+      }
+      else {
+        MessageCli.PRINT_BOOKINGS_HEADER.printMessage(tempVenue.getVenueName());
+        if (tempVenue.getBookingReferences().isEmpty()) {
+          MessageCli.PRINT_BOOKINGS_NONE.printMessage(tempVenue.getVenueName());
+        }
       }
     }
 

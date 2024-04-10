@@ -11,6 +11,7 @@ public class Venue {
   private ArrayList<String> bookingDates = new ArrayList<String>();
   private ArrayList<String> customerEmails = new ArrayList<String>();
   private ArrayList<Integer> attendees = new ArrayList<Integer>();
+  private ArrayList<String> bookingReferences = new ArrayList<String>();
 
   // constructor
   public Venue(String venueName, String venueCode, int venueCapacity, int hireFee) {
@@ -48,6 +49,10 @@ public class Venue {
     return this.attendees;
   }
 
+  public ArrayList<String> getBookingReferences() {
+    return this.bookingReferences;
+  }
+
   public void setBookingDate(String bookingDate) {
     this.bookingDates.add(bookingDate);
   }
@@ -58,5 +63,9 @@ public class Venue {
 
   public void setAttendees(int attendees) {
     this.attendees.add(attendees);
+  }
+
+  public void setBookingReference(String bookingReference) {
+    this.bookingReferences.add(bookingReference);
   }
 }
