@@ -8,10 +8,7 @@ public class Venue {
   private String venueCode;
   private int venueCapacity;
   private int hireFee;
-  private ArrayList<String> bookingDates = new ArrayList<String>();
-  private ArrayList<String> customerEmails = new ArrayList<String>();
-  private ArrayList<Integer> attendees = new ArrayList<Integer>();
-  private ArrayList<String> bookingReferences = new ArrayList<String>();
+  private ArrayList<Booking> bookings = new ArrayList<Booking>();
 
   // constructor
   public Venue(String venueName, String venueCode, int venueCapacity, int hireFee) {
@@ -37,35 +34,11 @@ public class Venue {
     return this.hireFee;
   }
 
-  public ArrayList<String> getBookingDates() {
-    return this.bookingDates;
+  public void addBooking(Booking booking) {
+    this.bookings.add(booking);
   }
 
-  public ArrayList<String> getCustomerEmails() {
-    return this.customerEmails;
-  }
-
-  public ArrayList<Integer> getAttendees() {
-    return this.attendees;
-  }
-
-  public ArrayList<String> getBookingReferences() {
-    return this.bookingReferences;
-  }
-
-  public void setBookingDate(String bookingDate) {
-    this.bookingDates.add(bookingDate);
-  }
-
-  public void setCustomerEmail(String customerEmail) {
-    this.customerEmails.add(customerEmail);
-  }
-
-  public void setAttendees(int attendees) {
-    this.attendees.add(attendees);
-  }
-
-  public void setBookingReference(String bookingReference) {
-    this.bookingReferences.add(bookingReference);
+  public ArrayList<Booking> getBookings() {
+    return this.bookings;
   }
 }

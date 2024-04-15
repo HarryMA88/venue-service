@@ -7,6 +7,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
   private ArrayList<Venue> venues = new ArrayList<Venue>();
   private String systemDate;
+  private ArrayList<Booking> bookings = new ArrayList<Booking>();
 
   public VenueHireSystem() {}
 
@@ -73,14 +74,14 @@ public class VenueHireSystem {
             String.valueOf(venue.getVenueHireFee()));
       }
     } else {
-      ArrayList<String> dates = null;
       for (Venue venue : venues) {
-        dates = venue.getBookingDates();
+        ArrayList<Booking> venueBookings = venue.getBookings();
         String available = systemDate;
-        if (!dates.isEmpty()) {
-          for (int i = 0; i < dates.size(); i++) {
-            if (dates.get(i).equals(available)) {
-              String[] dateParts = dates.get(i).split("/");
+        if (!venueBookings.isEmpty()) {
+          for (int i = 0; i < venueBookings.size(); i++) {
+            Booking booking = venueBookings.get(i);
+            if (booking.getBookingDate().equals(available)) {
+              String[] dateParts = booking.getBookingDate().split("/");
               int day = (Integer.parseInt(dateParts[0]) + 1);
               if (day < 10) {
                 dateParts[0] = "0" + day;
@@ -189,13 +190,14 @@ public class VenueHireSystem {
     }
     String[] dateInputParts = options[1].split("/");
     // reject if venue is booked on that date
-    for (int i = 0; i < tempVenue.getBookingDates().size(); i++) {
-      String[] bookingDateParts = tempVenue.getBookingDates().get(i).split("/");
+    ArrayList<Booking> venueBookings = tempVenue.getBookings();
+    for (Booking booking : venueBookings) {
+      String[] bookingDateParts = booking.getBookingDate().split("/");
       if (dateInputParts[0].equals(bookingDateParts[0])
           && dateInputParts[1].equals(bookingDateParts[1])
           && dateInputParts[2].equals(bookingDateParts[2])) {
         MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
-            tempVenue.getVenueName(), tempVenue.getBookingDates().get(i));
+            tempVenue.getVenueName(), booking.getBookingDate());
         return;
       }
     }
@@ -224,11 +226,11 @@ public class VenueHireSystem {
       options[3] = String.valueOf(tempVenue.getVenueCapacity());
     }
     // create booking
-    tempVenue.setBookingDate(options[1]);
-    tempVenue.setCustomerEmail(options[2]);
-    tempVenue.setAttendees(Integer.parseInt(options[3]));
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
-    tempVenue.setBookingReference(bookingReference);
+    Booking newBooking =
+        new Booking(options[1], options[2], Integer.parseInt(options[3]), bookingReference);
+    bookings.add(newBooking);
+    tempVenue.addBooking(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         bookingReference, tempVenue.getVenueName(), options[1], options[3]);
   }
@@ -253,12 +255,13 @@ public class VenueHireSystem {
         return;
       } else { // print bookings
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(tempVenue.getVenueName());
-        if (tempVenue.getBookingReferences().isEmpty()) {
+        ArrayList<Booking> venueBookings = tempVenue.getBookings();
+        if (venueBookings.isEmpty()) {
           MessageCli.PRINT_BOOKINGS_NONE.printMessage(tempVenue.getVenueName());
         } else {
-          for (int i = 0; i < tempVenue.getBookingReferences().size(); i++) {
+          for (Booking booking : venueBookings) {
             MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
-                tempVenue.getBookingReferences().get(i), tempVenue.getBookingDates().get(i));
+                booking.getBookingReference(), booking.getBookingDate());
           }
         }
       }
@@ -267,17 +270,10 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     boolean bookingReferenceFound = false;
-    ArrayList<String> bookingReferences;
     // find if booking reference exists
-    for (Venue venue : venues) {
-      bookingReferences = venue.getBookingReferences();
-      for (String string : bookingReferences) {
-        if (string.equals(bookingReference)) {
-          bookingReferenceFound = true;
-          break;
-        }
-      }
-      if (bookingReferenceFound) {
+    for (Booking booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingReferenceFound = true;
         break;
       }
     }
@@ -286,7 +282,6 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
     }
-
   }
 
   public void addServiceMusic(String bookingReference) {
