@@ -352,18 +352,18 @@ public class VenueHireSystem {
     // prints services
     int total = tempBooking.getVenue().getVenueHireFee();
     ArrayList<Service> services = tempBooking.getServices();
-    boolean cateringFound = false;
-    Catering catering = null;
     for (Service service : services) {
       if (service instanceof Catering) {
-        cateringFound = true;
-        catering = (Catering) service;
-      }
-    }
-    if (cateringFound) {
-      MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
-          catering.getCateringType().getName(), String.valueOf(catering.getCost()));
-      total += catering.getCost();
+        Catering catering = (Catering) service;
+        MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+            catering.getCateringType().getName(), String.valueOf(catering.getCost()));
+        total += catering.getCost();
+      } else if (service instanceof Music) {
+        Music music = (Music) service;
+        MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(String.valueOf(music.getCost()));
+        total += music.getCost();
+      } 
+      
     }
     // prints bottom half
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(total));
