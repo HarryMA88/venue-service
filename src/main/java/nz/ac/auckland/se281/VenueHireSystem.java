@@ -228,7 +228,13 @@ public class VenueHireSystem {
     // create booking
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
     Booking newBooking =
-        new Booking(options[1], options[2], Integer.parseInt(options[3]), bookingReference);
+        new Booking(
+            options[1],
+            options[2],
+            Integer.parseInt(options[3]),
+            bookingReference,
+            systemDate,
+            tempVenue);
     bookings.add(newBooking);
     tempVenue.addBooking(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
@@ -283,11 +289,12 @@ public class VenueHireSystem {
     if (!bookingReferenceFound) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
-    }
-    else {
+    } else {
       Service service = new Catering(tempBooking, cateringType);
+      service.setCost();
       tempBooking.addService(service);
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + cateringType.getName() + ")", bookingReference);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Catering (" + cateringType.getName() + ")", bookingReference);
     }
   }
 
@@ -300,6 +307,32 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    Booking tempBooking = null;
+    for (Booking booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        tempBooking = booking;
+        break;
+      }
+    }
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+        bookingReference,
+        tempBooking.getCustomerEmail(),
+        tempBooking.getDateOfBooking(),
+        tempBooking.getBookingDate(),
+        String.valueOf(tempBooking.getAttendees()),
+        tempBooking.getVenue().getVenueName());
+    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(String.valueOf(tempBooking.getVenue().getVenueHireFee()));
+    ArrayList<Service> services = tempBooking.getServices();
+    boolean cateringFound = false;
+    Catering catering = null;
+    for (Service service : services) {
+      if (service instanceof Catering) {
+        cateringFound = true;
+        catering = (Catering) service;
+      }
+    }
+    if (cateringFound) {
+      MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(catering.getCateringType().getName(), String.valueOf(catering.getCost()));
+    }
   }
 }

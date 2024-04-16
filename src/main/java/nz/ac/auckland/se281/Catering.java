@@ -17,4 +17,8 @@ public class Catering extends Service {
     cost = cateringType.getCostPerPerson() * attendees;
   }
 
+  public CateringType getCateringType() {
+    return cateringType;
+  }
+
 }
