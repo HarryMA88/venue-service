@@ -313,6 +313,11 @@ public class VenueHireSystem {
     if (!bookingReferenceFound) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
+    } else {
+      Service service = new Music(tempBooking);
+      service.setCost();
+      tempBooking.addService(service);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
     }
   }
 
