@@ -270,10 +270,12 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     boolean bookingReferenceFound = false;
+    Booking tempBooking = null;
     // find if booking reference exists
     for (Booking booking : bookings) {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingReferenceFound = true;
+        tempBooking = booking;
         break;
       }
     }
@@ -281,6 +283,11 @@ public class VenueHireSystem {
     if (!bookingReferenceFound) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       return;
+    }
+    else {
+      Service service = new Catering(tempBooking, cateringType);
+      tempBooking.addService(service);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + cateringType.getName() + ")", bookingReference);
     }
   }
 
