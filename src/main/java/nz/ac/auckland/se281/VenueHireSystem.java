@@ -382,6 +382,11 @@ public class VenueHireSystem {
         Music music = (Music) service;
         MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(String.valueOf(music.getCost()));
         total += music.getCost();
+      } else if (service instanceof Floral) {
+        Floral floral = (Floral) service;
+        MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+            floral.getFloralType().getName(), String.valueOf(floral.getCost()));
+        total += floral.getCost();
       }
     }
     // prints bottom half
