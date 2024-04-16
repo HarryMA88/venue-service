@@ -10,5 +10,4 @@ public class Music extends Service {
   public void setCost() {
     cost = 500;
   }
-
 }

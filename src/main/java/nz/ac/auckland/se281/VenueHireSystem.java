@@ -336,6 +336,12 @@ public class VenueHireSystem {
     if (!bookingReferenceFound) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
+    } else {
+      Service service = new Floral(tempBooking, floralType);
+      service.setCost();
+      tempBooking.addService(service);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Floral (" + floralType.getName() + ")", bookingReference);
     }
   }
 
@@ -376,8 +382,7 @@ public class VenueHireSystem {
         Music music = (Music) service;
         MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(String.valueOf(music.getCost()));
         total += music.getCost();
-      } 
-      
+      }
     }
     // prints bottom half
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(total));

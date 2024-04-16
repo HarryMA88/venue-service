@@ -14,7 +14,4 @@ public abstract class Service {
   public int getCost() {
     return cost;
   }
-
-
-
 }
