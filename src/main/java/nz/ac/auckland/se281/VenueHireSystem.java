@@ -299,7 +299,21 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    boolean bookingReferenceFound = false;
+    Booking tempBooking = null;
+    // find if booking reference exists
+    for (Booking booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingReferenceFound = true;
+        tempBooking = booking;
+        break;
+      }
+    }
+    // reject if booking reference not found
+    if (!bookingReferenceFound) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+      return;
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
@@ -323,7 +337,8 @@ public class VenueHireSystem {
         tempBooking.getBookingDate(),
         String.valueOf(tempBooking.getAttendees()),
         tempBooking.getVenue().getVenueName());
-    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(String.valueOf(tempBooking.getVenue().getVenueHireFee()));
+    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
+        String.valueOf(tempBooking.getVenue().getVenueHireFee()));
     int total = tempBooking.getVenue().getVenueHireFee();
     ArrayList<Service> services = tempBooking.getServices();
     boolean cateringFound = false;
@@ -336,11 +351,11 @@ public class VenueHireSystem {
       }
     }
     if (cateringFound) {
-      MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(catering.getCateringType().getName(), String.valueOf(catering.getCost()));
+      MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+          catering.getCateringType().getName(), String.valueOf(catering.getCost()));
       total += catering.getCost();
     }
     // prints bottom half
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(total));
-
   }
 }
