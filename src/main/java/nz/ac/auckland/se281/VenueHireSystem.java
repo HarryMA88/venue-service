@@ -334,6 +334,11 @@ public class VenueHireSystem {
         break;
       }
     }
+    // reject if booking reference not found
+    if (tempBooking == null) {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
+    }
     // prints top half
     MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
         bookingReference,
@@ -344,11 +349,11 @@ public class VenueHireSystem {
         tempBooking.getVenue().getVenueName());
     MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
         String.valueOf(tempBooking.getVenue().getVenueHireFee()));
+    // prints services
     int total = tempBooking.getVenue().getVenueHireFee();
     ArrayList<Service> services = tempBooking.getServices();
     boolean cateringFound = false;
     Catering catering = null;
-    // prints services
     for (Service service : services) {
       if (service instanceof Catering) {
         cateringFound = true;
