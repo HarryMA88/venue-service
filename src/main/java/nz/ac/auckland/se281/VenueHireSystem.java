@@ -307,6 +307,7 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
+    // finds the booking
     Booking tempBooking = null;
     for (Booking booking : bookings) {
       if (booking.getBookingReference().equals(bookingReference)) {
@@ -314,6 +315,7 @@ public class VenueHireSystem {
         break;
       }
     }
+    // prints top half
     MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
         bookingReference,
         tempBooking.getCustomerEmail(),
@@ -322,9 +324,11 @@ public class VenueHireSystem {
         String.valueOf(tempBooking.getAttendees()),
         tempBooking.getVenue().getVenueName());
     MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(String.valueOf(tempBooking.getVenue().getVenueHireFee()));
+    int total = tempBooking.getVenue().getVenueHireFee();
     ArrayList<Service> services = tempBooking.getServices();
     boolean cateringFound = false;
     Catering catering = null;
+    // prints services
     for (Service service : services) {
       if (service instanceof Catering) {
         cateringFound = true;
@@ -333,6 +337,10 @@ public class VenueHireSystem {
     }
     if (cateringFound) {
       MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(catering.getCateringType().getName(), String.valueOf(catering.getCost()));
+      total += catering.getCost();
     }
+    // prints bottom half
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(total));
+
   }
 }
