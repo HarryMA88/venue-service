@@ -322,7 +322,21 @@ public class VenueHireSystem {
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    boolean bookingReferenceFound = false;
+    Booking tempBooking = null;
+    // find if booking reference exists
+    for (Booking booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingReferenceFound = true;
+        tempBooking = booking;
+        break;
+      }
+    }
+    // reject if booking reference not found
+    if (!bookingReferenceFound) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
+      return;
+    }
   }
 
   public void viewInvoice(String bookingReference) {
